@@ -3,6 +3,8 @@
 */
 package com.example.jooq.generated.tables.pojos;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.annotation.Generated;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +17,7 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @Entity
 @Table(name = "project", schema = "public", indexes = { @Index(name = "project_pkey", unique = true, columnList = "id ASC") })
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Project implements Serializable {
 
 	private static final long serialVersionUID = 1013723631;

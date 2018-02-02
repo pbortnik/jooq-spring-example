@@ -23,6 +23,7 @@ package com.example.jooq;
 
 import com.example.jooq.generated.tables.daos.ProjectDao;
 import com.example.jooq.generated.tables.daos.UsersDao;
+import com.example.jooq.generated.tables.daos.UsersProjectDao;
 import com.example.jooq.generated.tables.pojos.Project;
 import com.example.jooq.generated.tables.pojos.Users;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -48,6 +50,9 @@ public class MainController {
 
 	@Autowired
 	private UsersDao usersDao;
+
+	@Autowired
+	private UsersProjectDao usersProjectDao;
 
 	@RequestMapping(method = GET, value = "/projects")
 	@ResponseStatus(OK)
@@ -68,11 +73,8 @@ public class MainController {
 	@RequestMapping(method = GET, value = "/update")
 	@ResponseStatus(OK)
 	@ResponseBody
-	public String getUsersProjects() {
-		List<Users> all = usersDao.findAll();
-		all.forEach(it -> it.setLogin("pavel"));
-		usersDao.update(all);
-		return "ok";
+	public Map<String, List<com.example.jooq.generated.tables.pojos.Project>> getUsersProjects() {
+		return usersProjectDao.joinAll();
 	}
 
 

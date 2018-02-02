@@ -21,7 +21,7 @@
 
 package com.example.jooq;
 
-import com.jolbox.bonecp.BoneCPDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
@@ -51,16 +51,14 @@ public class PersistenceContext {
 
 	@Bean
 	public DataSource dataSource() {
-		BoneCPDataSource dataSource = new BoneCPDataSource();
-
-		dataSource.setDriverClass(env.getRequiredProperty("spring.datasource.driver-class-name"));
+		HikariDataSource dataSource = new HikariDataSource();
+		dataSource.setDriverClassName(env.getRequiredProperty("spring.datasource.driver-class-name"));
 		dataSource.setJdbcUrl(env.getRequiredProperty("spring.datasource.url"));
 		dataSource.setUsername(env.getRequiredProperty("spring.datasource.username"));
 		dataSource.setPassword(env.getRequiredProperty("spring.datasource.password"));
 
 		return dataSource;
 	}
-
 
 	@Bean
 	public LazyConnectionDataSourceProxy lazyConnectionDataSource() {
@@ -81,20 +79,20 @@ public class PersistenceContext {
 	public DataSourceConnectionProvider connectionProvider() {
 		return new DataSourceConnectionProvider(transactionAwareDataSource());
 	}
-//
-//	@Bean
-//	public JOOQToSpringExceptionTransformer jooqToSpringExceptionTransformer() {
-//		return new JOOQToSpringExceptionTransformer();
-//	}
+	//
+	//	@Bean
+	//	public JOOQToSpringExceptionTransformer jooqToSpringExceptionTransformer() {
+	//		return new JOOQToSpringExceptionTransformer();
+	//	}
 
 	@Bean
 	public DefaultConfiguration configuration() {
 		DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
 
 		jooqConfiguration.set(connectionProvider());
-//		jooqConfiguration.set(new DefaultExecuteListenerProvider(
-//				jooqToSpringExceptionTransformer()
-//		));
+		//		jooqConfiguration.set(new DefaultExecuteListenerProvider(
+		//				jooqToSpringExceptionTransformer()
+		//		));
 
 		String sqlDialectName = env.getRequiredProperty("spring.jooq.sql-dialect");
 		SQLDialect dialect = SQLDialect.valueOf(sqlDialectName);
