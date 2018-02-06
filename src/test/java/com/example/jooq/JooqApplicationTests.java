@@ -29,9 +29,8 @@ import java.sql.Types;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.reportportal.auth.db.Tables.PROJECT;
-import static com.epam.reportportal.auth.db.Tables.USERS;
-import static com.epam.reportportal.auth.db.Tables.USERS_PROJECT;
+import static com.epam.reportportal.auth.db.Tables.*;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -67,8 +66,13 @@ public class JooqApplicationTests {
 	}
 
 	@Test
-	public void selectTest() {
-		System.out.println(aggregateUserProjects());
+	public void selectGroupsTest() {
+		assertThat(aggregateUserProjects()).hasSize(3);
+	}
+
+	@Test
+	public void selectWithJoinTest() {
+		assertThat(getUserProjects(1)).hasSize(1);
 	}
 
 	@Autowired
@@ -91,7 +95,7 @@ public class JooqApplicationTests {
 	}
 
 	public List<ProjectRecord> getUserProjects(Integer id) {
-		return dsl.select()
+		return dsl.select(USERS.fields())
 				.from(USERS)
 				.join(USERS_PROJECT)
 				.on(USERS_PROJECT.USER_ID.eq(USERS.ID))
