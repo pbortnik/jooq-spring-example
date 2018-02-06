@@ -1,0 +1,18 @@
+<dataset>
+
+    <project id="1" name="vasia_personal"/>
+    <project id="2" name="petia_personal"/>
+    <project id="3" name="valera_personal"/>
+
+    <users id="1" login="vasia" password="111" email="vasia@domain.com" role="USER"
+           type="INTERNAL" default_project_id="1" full_name="Vasia Vasia"/>
+    <users id="2" login="petia" password="111" email="petia@domain.com" role="USER"
+           type="INTERNAL" default_project_id="2" full_name="petia petia"/>
+    <users id="3" login="valera" password="111" email="valera@domain.com" role="USER"
+           type="INTERNAL" default_project_id="3" full_name="valera valera"/>
+
+
+    <users_project user_id="1" project_id="1" project_role="MEMBER"/>
+    <users_project user_id="2" project_id="2" project_role="MEMBER"/>
+    <users_project user_id="3" project_id="3" project_role="MEMBER"/>
+</dataset>

@@ -58,6 +58,12 @@
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.2.Final</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.5.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -81,7 +87,7 @@
                         <version>1.0.0</version>
                         <executions>
                             <execution>
-                                <phase>initialize</phase>
+                                <phase>generate-sources</phase>
                                 <goals>
                                     <goal>read-project-properties</goal>
                                 </goals>
@@ -113,7 +119,7 @@
                             <dependency>
                                 <groupId>org.postgresql</groupId>
                                 <artifactId>postgresql</artifactId>
-                                <version>9.4.1212</version>
+                                <version>42.2.1</version>
                             </dependency>
                         </dependencies>
 
@@ -145,6 +151,7 @@
                                 <target>
                                     <packageName>generated</packageName>
                                     <directory>src/main/java/</directory>
+                                    <packageName>com.epam.reportportal.auth.db</packageName>
                                 </target>
                             </generator>
                         </configuration>
